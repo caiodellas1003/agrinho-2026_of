@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Missão Estufa Inteligente - Agrinho 2026</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e8f5e9;
+            color: #2e7d32;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background-color: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            max-width: 600px;
+            width: 100%;
+            text-align: center;
+        }
+        h1 { color: #1b5e20; }
+        .status-bar {
+            display: flex;
+            justify-content: space-around;
+            background-color: #c8e6c9;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+        .cenario {
+            font-size: 1.1em;
+            margin-bottom: 25px;
+            line-height: 1.6;
+            color: #333;
+        }
+        button {
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            margin: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: 0.2s;
+            width: 80%;
+        }
+        button:hover { background-color: #388e3c; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>🌱 Missão Estufa Inteligente</h1>
+    
+    <div class="status-bar">
+        <div>❤️ Saúde: <span id="saude">100</span>%</div>
+        <div>💧 Água: <span id="agua">100</span>%</div>
+        <div>⚡ Energia: <span id="energia">100</span>%</div>
+        <div>🏆 Pontos: <span id="pontos">0</span></div>
+    </div>
+
+    <div id="jogo">
+        <p class="cenario" id="texto-cenario">O sol está muito forte e a temperatura dentro da estufa subiu para 35°C! As plantas estão murchando. O que você faz?</p>
+        <button onclick="escolha(1)" id="btnA">Opção A: Ligar irrigação e ventiladores no máximo.</button>
+        <button onclick="escolha(2)" id="btnB">Opção B: Ativar telas de sombreamento e abrir janelas manuais.</button>
+    </div>
+</div>
+
+<script>
+    // Variáveis do Jogo
+    let saude = 100;
+    let agua = 100;
+    let energia = 100;
+    let pontos = 0;
+    let fase = 1;
+
+    function atualizarStatus() {
+        document.getElementById('saude').innerText = saude;
+        document.getElementById('agua').innerText = agua;
+        document.getElementById('energia').innerText = energia;
+        document.getElementById('pontos').innerText = pontos;
+    }
+
+    function escolha(opcao) {
+        if (fase === 1) {
+            if (opcao === 1) {
+                agua -= 20; energia -= 20;
+                alert("Boa reação, mas gastou muita água e energia!");
+            } else {
+                saude += 5; pontos += 10;
+                alert("Excelente! Manejo sustentável economizou recursos.");
+            }
+            // Avança para o Dia 2
+            fase = 2;
+            document.getElementById('texto-cenario').innerText = "Dia 2: Você detectou uma pequena infestação de pulgões (pragas) em um canteiro. Como resolver?";
+            document.getElementById('btnA').innerText = "Opção A: Aplicar defensivo químico forte em tudo.";
+            document.getElementById('btnB').innerText = "Opção B: Introduzir joaninhas e usar calda orgânica.";
+        } 
+        else if (fase === 2) {
+            if (opcao === 1) {
+                saude -= 10; pontos -= 15;
+                alert("As pragas sumiram, mas a química afetou a saúde do ecossistema.");
+            } else {
+                saude += 15; pontos += 20;
+                alert("Incrível! O controle biológico funcionou perfeitamente.");
+            }
+            // Fim do Jogo demonstrativo
+            finalizarJogo();
+        }
+        atualizarStatus();
+    }
+
+    function finalizarJogo() {
+        let mensagem = "";
+        if (pontos >= 15 && saude > 70) {
+            mensagem = "🏆 PARABÉNS! Você ganhou o título de Mestre do Agro Sustentável!";
+        } else {
+            mensagem = "👨‍🌾 Jogo Terminado! Sua estufa sobreviveu, mas dá para melhorar a sustentabilidade.";
+        }
+        document.getElementById('jogo').innerHTML = `<h2>${mensagem}</h2><button onclick="window.location.reload()">Jogar Novamente</button>`;
+    }
+</script>
+
+</body>
+</html>
